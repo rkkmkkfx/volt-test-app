@@ -1,6 +1,21 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import promise from 'redux-promise';
 
-import 'react-select/dist/react-select.css';
+import reducers from './redux/reducers';
 
-render(<div>Place your application here</div>, document.getElementById('app-root'));
+const createStoreWithMiddleware = applyMiddleware(
+  promise
+)( createStore );
+
+const store = createStoreWithMiddleware(reducers);
+
+ReactDOM.render(
+  <Provider store={ store }>
+    <App />
+  </Provider>,
+  document.getElementById('app-root')
+);
