@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+
+import history from './../utils';
 
 import Header from './Header/Header';
 import Content from './Content/Content';
@@ -7,7 +9,7 @@ import Content from './Content/Content';
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={ history }>
         <main>
           <Header/>
           <Content/>

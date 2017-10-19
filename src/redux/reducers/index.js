@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import ThingReducer from './main';
-import { reducer as formReducer } from 'redux-form';
+import ModalReducer from './modal';
 
-const rootReducer = combineReducers( {
+const rootReducer = combineReducers({
   things: ThingReducer,
-  form: formReducer
-} );
+  modal: ModalReducer
+});
 
 export default rootReducer;

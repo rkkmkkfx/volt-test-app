@@ -4,11 +4,12 @@ import App from './components/App';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import promise from 'redux-promise';
+import logger from 'redux-logger';
 
 import reducers from './redux/reducers';
 
 const createStoreWithMiddleware = applyMiddleware(
-  promise
+  promise, logger
 )( createStore );
 
 const store = createStoreWithMiddleware(reducers);

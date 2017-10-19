@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import { Grid, Row, PageHeader, Table } from 'react-bootstrap';
+import { Grid, Row, PageHeader, Button, Table } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
-import { fetchAll, selectThingType } from './../../../redux/actions/index';
+import { fetchAll, selectThingType, toggleModal } from './../../../redux/actions/index';
 
 import Item from './Item';
+import ModalEdit from './ModalEdit';
+import ModalDelete from './ModalDelete';
 
-function capitalizeFirstLetter(string) {
-  return (string) ? string.charAt(0).toUpperCase() + string.slice(1) : string;
-}
+import * as utils from './../../../utils';
 
 const typeScheme = {
-  invoices: ['id', 'customer', 'discount', 'total', ''],
-  products: ['id', 'name', 'price'],
-  customers: ['id', 'name', 'address', 'phone']
+  invoices: ['customer', 'discount', 'total', ''],
+  products: ['name', 'price'],
+  customers: ['name', 'address', 'phone']
 }
 
 class Index extends Component {
   returnThead(scheme) {
-    return scheme.map(el => {return((el !== 'id') ? <th key={ el }>{ capitalizeFirstLetter(el) }</th> : <th key={ el }>#</th>)})
+    return scheme.map(el => {return(<th key={ el }>{ utils.capitalizeFirstLetter(el) }</th>)})
   }
 
   returnThings(things) {
@@ -34,19 +34,33 @@ class Index extends Component {
     this.props.fetchAll(this.props.match.params.thingsType);
   }
 
+  openModal() {
+    this.props.toggleModal(false, 'edit');
+  }
+
   render() {
     if (this.props.match.params.thingsType !== undefined) {
       let title = this.props.things.type || this.props.match.params.thingsType;
-      if (title) title = title.slice(0, -1);
+      if (title) {title = title.slice(0, -1)}
       if (this.props.things.data) {
         return(
           <Grid>
             <Row>
-              <PageHeader>{ capitalizeFirstLetter(title) } List</PageHeader>
+              <PageHeader>
+                { utils.capitalizeFirstLetter(title) } List&nbsp;&nbsp;
+                <small><Button onClick={ this.openModal.bind(this) }>Create</Button></small>
+              </PageHeader>
               <Table>
-                <thead><tr>{ this.returnThead(typeScheme[this.props.things.type]) }</tr></thead>
+                <thead>
+                  <tr>
+                    <th key="id">#</th>
+                    { this.returnThead(typeScheme[this.props.things.type]) }
+                  </tr>
+                </thead>
                 <tbody>{ this.returnThings(this.props.things) }</tbody>
               </Table>
+              <ModalEdit scheme={ typeScheme[this.props.things.type] }/>
+              <ModalDelete/>
             </Row>
           </Grid>
         )
@@ -65,4 +79,4 @@ function mapStateToProps( state ) {
   return state;
 }
 
-export default connect( mapStateToProps, { fetchAll, selectThingType } )( Index );
+export default connect( mapStateToProps, { fetchAll, selectThingType, toggleModal } )( Index );

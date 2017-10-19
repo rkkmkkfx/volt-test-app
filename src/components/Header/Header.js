@@ -31,6 +31,7 @@ class Header extends Component {
   }
 
   handleClick(event) {
+    console.log(history);
     const urlToArray = event.target.href.split('/');
     const thing = urlToArray[urlToArray.length - 1];
     this.props.selectThingType(thing);
