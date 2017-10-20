@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Router } from 'react-router-dom';
 
-import history from './../utils';
+import { history } from './../utils';
 
 import Header from './Header/Header';
-import Content from './Content/Content';
+import Routes from './Content/Routes';
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
       <Router history={ history }>
         <main>
           <Header/>
-          <Content/>
+          <Routes/>
         </main>
       </Router>
   )

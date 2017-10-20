@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
-import ThingReducer from './main';
+import ItemsReducer from './main';
 import ModalReducer from './modal';
 
 const rootReducer = combineReducers({
-  things: ThingReducer,
+  items: ItemsReducer,
   modal: ModalReducer
 });
 

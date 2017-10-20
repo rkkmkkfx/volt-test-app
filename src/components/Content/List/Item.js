@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ButtonGroup, Button, Glyphicon } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
-import { selectItem, confirmDelete, deleteThing, fetchAll, toggleModal } from './../../../redux/actions/index';
+import { selectItem, confirmDelete, deleteItem, fetchAll, toggleModal } from './../../../redux/actions/index';
 
 class Item extends Component {
   openItemModal(item) {
@@ -43,4 +43,4 @@ function mapStateToProps( state ) {
   return state;
 }
 
-export default connect( mapStateToProps, { selectItem, confirmDelete, deleteThing, fetchAll, toggleModal } )( Item );
+export default connect( mapStateToProps, { selectItem, confirmDelete, deleteItem, fetchAll, toggleModal } )( Item );

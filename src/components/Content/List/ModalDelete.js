@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col, Modal, Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
-import { toggleModal, selectItem, deleteThing, fetchAll } from './../../../redux/actions/index';
+import { toggleModal, selectItem, deleteItem, fetchAll } from './../../../redux/actions/index';
 
 class ModalDelete extends Component {
   closeModal() {
@@ -11,9 +11,9 @@ class ModalDelete extends Component {
   }
 
   deleteItem(id) {
-    this.props.deleteThing(this.props.things.type, id);
+    this.props.deleteItem(this.props.items.type, id);
     setTimeout(() => {
-      this.props.fetchAll(this.props.things.type);
+      this.props.fetchAll(this.props.items.type);
       this.closeModal();
     }, 1000);
   }
@@ -45,4 +45,4 @@ function mapStateToProps( state ) {
   return state;
 }
 
-export default connect( mapStateToProps, { toggleModal, selectItem, deleteThing, fetchAll } )( ModalDelete );
+export default connect( mapStateToProps, { toggleModal, selectItem, deleteItem, fetchAll } )( ModalDelete );

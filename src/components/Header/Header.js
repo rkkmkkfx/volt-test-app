@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {LinkContainer} from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { fetchAll, selectThingType } from './../../redux/actions/index';
+import { fetchAll, selectItemType } from './../../redux/actions/index';
 
 class Header extends Component {
   render() {
@@ -16,26 +16,18 @@ class Header extends Component {
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
-          <LinkContainer to="/invoices" onClick={ this.handleClick.bind(this) }>
+          <LinkContainer to="/invoices">
             <NavItem>Invoices</NavItem>
           </LinkContainer>
-          <LinkContainer to="/products" onClick={ this.handleClick.bind(this) }>
+          <LinkContainer to="/products">
             <NavItem>Products</NavItem>
           </LinkContainer>
-          <LinkContainer to="/customers" onClick={ this.handleClick.bind(this) }>
+          <LinkContainer to="/customers">
             <NavItem>Customers</NavItem>
           </LinkContainer>
         </Nav>
       </Navbar>
     )
-  }
-
-  handleClick(event) {
-    console.log(history);
-    const urlToArray = event.target.href.split('/');
-    const thing = urlToArray[urlToArray.length - 1];
-    this.props.selectThingType(thing);
-    this.props.fetchAll(thing);
   }
 }
 
@@ -43,4 +35,4 @@ function mapStateToProps( state ) {
   return state;
 }
 
-export default connect( mapStateToProps, { fetchAll, selectThingType } )( Header );
+export default connect( mapStateToProps, { fetchAll, selectItemType } )( Header );

@@ -1,25 +1,25 @@
 import axios from 'axios';
 
 export const FETCH_ALL = 'FETCH_ALL';
-export const CREATE_THING = 'CREATE_THING';
-export const UPDATE_THING = 'UPDATE_THING';
-export const DELETE_THING = 'DELETE_THING';
-export const SELECT_THING_TYPE = 'SELECT_THING_TYPE';
+export const CREATE_ITEM = 'CREATE_ITEM';
+export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const SELECT_ITEM_TYPE = 'SELECT_ITEM_TYPE';
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const CONFIRM_DELETE = 'CONFIRM_DELETE';
 
 const ROOT_URL = '/api';
 
-export function selectThingType(thingType) {
+export function selectItemType(itemType) {
   return {
-    type: SELECT_THING_TYPE,
-    payload: thingType
+    type: SELECT_ITEM_TYPE,
+    payload: itemType
   }
 }
 
-export function fetchAll(thing) {
-  const request = axios.get( `${ROOT_URL}/${thing}` );
+export function fetchAll(type) {
+  const request = axios.get( `${ROOT_URL}/${type}` );
 
   return {
     type: FETCH_ALL,
@@ -27,29 +27,29 @@ export function fetchAll(thing) {
   }
 }
 
-export function createThing( thing, props ) {
-  const request = axios.post( `${ROOT_URL}/${thing}`, props );
+export function createItem( type, props ) {
+  const request = axios.post( `${ROOT_URL}/${type}`, props );
 
   return {
-    type: CREATE_THING,
+    type: CREATE_ITEM,
     payload: request
   }
 }
 
-export function updateThing( thing, id, props ) {
-  const request = axios.put( `${ROOT_URL}/${thing}/${id}`, props );
+export function updateItem( type, id, props ) {
+  const request = axios.put( `${ROOT_URL}/${type}/${id}`, props );
 
   return {
-    type: UPDATE_THING,
+    type: UPDATE_ITEM,
     payload: request
   }
 }
 
-export function deleteThing( thing, id ) {
-  const request = axios.delete( `${ROOT_URL}/${thing}/${id}` );
+export function deleteItem( type, id ) {
+  const request = axios.delete( `${ROOT_URL}/${type}/${id}` );
 
   return {
-    type   : DELETE_THING,
+    type   : DELETE_ITEM,
     payload: request
   }
 }

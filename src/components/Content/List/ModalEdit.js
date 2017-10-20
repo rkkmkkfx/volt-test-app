@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col, Modal, Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
-import { toggleModal, selectItem, createThing, updateThing, fetchAll } from './../../../redux/actions/index';
+import { toggleModal, selectItem, createItem, updateItem, fetchAll } from './../../../redux/actions/index';
 
 import * as utils from './../../../utils';
 
@@ -13,12 +13,12 @@ class ModalEdit extends Component {
       data[key] = event.target[key].value;
     }
     if (id) {
-      this.props.updateThing(this.props.things.type, id, data);
+      this.props.updateItem(this.props.items.type, id, data);
     } else {
-      this.props.createThing(this.props.things.type, data);
+      this.props.createItem(this.props.items.type, data);
     }
     setTimeout(() => {
-      this.props.fetchAll(this.props.things.type);
+      this.props.fetchAll(this.props.items.type);
       this.closeModal();
     }, 1000);
   }
@@ -31,8 +31,8 @@ class ModalEdit extends Component {
   renderForm(scheme, data) {
     if (scheme instanceof Array) {
       return scheme.map(key => { return(
-        <FormGroup controlId={ key } key={key}>
-          <Col componentClass={ControlLabel} sm={2}>
+        <FormGroup controlId={ key } key={ key }>
+          <Col componentClass={ ControlLabel } sm={ 2 }>
             { utils.capitalizeFirstLetter(key) }
           </Col>
           <Col sm={10}>
@@ -77,4 +77,4 @@ function mapStateToProps( state ) {
   return state;
 }
 
-export default connect( mapStateToProps, { toggleModal, selectItem, createThing, updateThing, fetchAll } )( ModalEdit );
+export default connect( mapStateToProps, { toggleModal, selectItem, createItem, updateItem, fetchAll } )( ModalEdit );
