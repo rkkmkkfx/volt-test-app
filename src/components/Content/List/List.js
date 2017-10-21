@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 import { Grid, Row, PageHeader, Button, Table } from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 
 import { connect } from 'react-redux';
 import { fetchAll, selectItemType, toggleModal } from './../../../redux/actions/index';
@@ -31,58 +32,60 @@ class List extends Component {
     }
   }
 
-  loadData(location) {
-    this.props.selectItemType(location);
-    this.props.fetchAll(location);
+  loadData(type) {
+    this.props.selectItemType(type);
+    this.props.fetchAll(type);
   }
 
   componentDidMount() {
     history.listen((location, action) => {
-      this.loadData(location.pathname.substr(1));
+      this.loadData(location.pathname.substr(1) || 'invoices');
     });
-    this.loadData(history.location.pathname.substr(1));
+    this.loadData(history.location.pathname.substr(1) || 'invoices');
   }
 
-  openModal() {
-    this.props.toggleModal(false, 'edit');
+  openModal(event) {
+    if (this.props.items.type !== 'invoices') {
+      event.preventDefault();
+      this.props.toggleModal(false, 'edit');
+    } else {
+
+    }
   }
 
   render() {
-    const type = this.props.match.path.substr(1);
-    if (type) {
-      const title = capitalizeFirstLetter(type.slice(0, -1)) + ' List';
-      if (this.props.items.data instanceof Array) {
-        return(
-          <Grid>
-            <Row>
-              <DocumentTitle title={ title }>
-                <PageHeader>
-                  { title }
-                  &nbsp;&nbsp;
-                  <small><Button onClick={ this.openModal.bind(this) }>Create</Button></small>
-                </PageHeader>
-              </DocumentTitle>
-              <Table>
-                <thead>
-                  <tr>
-                    <th key="id">#</th>
-                    { this.renderThead(typeScheme[type]) }
-                  </tr>
-                </thead>
-                <tbody>{ this.renderItems(this.props.items) }</tbody>
-              </Table>
-              <ModalEdit scheme={ typeScheme[type] }/>
-              <ModalDelete/>
-            </Row>
-          </Grid>
-        )
-      } else {
-        return(
-          <div>Loading...</div>
-        )
-      }
+    const type = this.props.match.path.substr(1) || 'invoices';
+    console.log(type);
+    const title = capitalizeFirstLetter(type.slice(0, -1)) + ' List';
+    if (this.props.items.data instanceof Array) {
+      return(
+        <Grid>
+          <Row>
+            <DocumentTitle title={ title }>
+              <PageHeader>
+                { title }
+                &nbsp;&nbsp;
+                <small><LinkContainer to="/create"><Button onClick={ this.openModal.bind(this) }>Create</Button></LinkContainer></small>
+              </PageHeader>
+            </DocumentTitle>
+            <Table>
+              <thead>
+                <tr>
+                  <th key="id">#</th>
+                  { this.renderThead(typeScheme[type]) }
+                </tr>
+              </thead>
+              <tbody>{ this.renderItems(this.props.items) }</tbody>
+            </Table>
+            <ModalEdit scheme={ typeScheme[type] }/>
+            <ModalDelete/>
+          </Row>
+        </Grid>
+      )
     } else {
-      return(<Grid><DocumentTitle title='Home'><PageHeader>Hello!</PageHeader></DocumentTitle></Grid>)
+      return(
+        <div>Loading...</div>
+      )
     }
   }
 }

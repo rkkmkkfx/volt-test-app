@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Modal, Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { toggleModal, selectItem, deleteItem, fetchAll } from './../../../redux/actions/index';
@@ -22,7 +22,7 @@ class ModalDelete extends Component {
     const item = this.props.modal.data;
     if (item instanceof Object) {
       return (
-        <Modal show={ (this.props.modal.isOpen && (this.props.modal.active === 'delete')) } onHide={ this.closeModal.bind(this) }>
+        <Modal bsSize="small" show={ (this.props.modal.isOpen && (this.props.modal.active === 'delete')) } onHide={ this.closeModal.bind(this) }>
           <Modal.Header closeButton>
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
